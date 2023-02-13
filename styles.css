@@ -17,6 +17,7 @@ body{
     align-items: center;
     height: 100vh;
     background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    overflow: hidden;
 }
 .container{
     box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.2);
@@ -82,6 +83,7 @@ button{
     color: white;
     border-radius: 0.2rem;
     margin-bottom: 0.3rem;
+    max-width: 18ch;
 }
 
 

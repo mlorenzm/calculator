@@ -38,26 +38,48 @@ function operate(num1, operator, num2){
     }
 }
 
+function clearScreen(e) {
+    screen.textContent = '⠀'; // this is an empty unicode character, to avoid CSS screen collapsing
+    currentOperator = '';
+    firstNumber = '';
+    lastNumber = '';
+};
 
 let clear = document.querySelector('.clear');
 let screen = document.querySelector('.screen');
-clear.addEventListener('click', () =>{
-        screen.textContent = '⠀'; // this is an empty unicode character, to avoid CSS screen collapsing
-        currentNumber = '';
-    })
+clear.addEventListener('click', clearScreen);
 
-let currentNumber ='';
+let firstNumber ='';
+let lastNumber = '';
 
-let number = document.getElementsByClassName('number');
+let numbers = document.getElementsByClassName('operand');
 
-for (let i=0; i<number.length; i++){
-    number[i].addEventListener('click', function(){
-        currentNumber += number[i].innerHTML;
-        screen.innerHTML = currentNumber;
+for (let i=0; i<numbers.length; i++){
+    numbers[i].addEventListener('click', function(){
+
+        firstNumber += numbers[i].innerHTML;
+        screen.innerHTML = firstNumber;
+        if (currentOperator){
+            lastNumber += numbers[i].innerHTML;
+            screen.innerHTML = lastNumber;
+        }
         })
 };
 
-// I have the way to join numbers and print them 
+let currentOperator;
+let operators = document.getElementsByClassName('operator');
+
+
+for (let i=0; i<operators.length; i++){
+    operators[i].addEventListener('click', function(){
+        currentOperator = operators[i].innerHTML;
+        clearScreen;
+        screen.innerHTML = currentOperator;
+        })
+};
+
+
+// I have the way to join numbers and print them to the screen, erasing them when the C button is pressed
 
 
 
