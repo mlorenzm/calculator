@@ -25,25 +25,26 @@ const invert = (a) => {
 
 
 function operate(num1, operator, num2){
-    if (operator == 'inv'){
+    if (operator == 'x⁻¹'){
         return invert(num1);
     } else if (operator == '+'){
         return add(num1, num2);
     } else if (operator == '-'){
         return subtract(num1,num2);
-    } else if (operator == '*'){
+    } else if (operator == '×'){
         return multiply(num1, num2);
-    } else if (operator == '/'){
+    } else if (operator == '÷'){
         return divide(num1,num2);
     }
 }
 
-function clearScreen(e) {
-    screen.textContent = '⠀'; // this is an empty unicode character, to avoid CSS screen collapsing
+function clearScreen() {
+    screen.innerHTML = '⠀'; // this is an empty unicode character, to avoid CSS screen collapsing
     currentOperator = '';
     firstNumber = '';
     lastNumber = '';
 };
+
 
 let clear = document.querySelector('.clear');
 let screen = document.querySelector('.screen');
@@ -56,6 +57,7 @@ let numbers = document.getElementsByClassName('operand');
 
 for (let i=0; i<numbers.length; i++){
     numbers[i].addEventListener('click', function(){
+        screen.innerHTML = '⠀';
         if (!currentOperator){
             firstNumber += numbers[i].innerHTML;
             screen.innerHTML = firstNumber;
@@ -78,6 +80,24 @@ for (let i=0; i<operators.length; i++){
         screen.innerHTML = currentOperator;
         })
 };
+
+let backspace = document.querySelector('.backspace')
+backspace.addEventListener('click', function(){
+    if (screen.innerHTML.length == '1'){
+        screen.innerHTML = '0';
+    } else {
+        newScreen = screen.innerHTML.slice(0, -1);
+        screen.innerHTML = newScreen;
+    }
+})
+
+let equal = document.querySelector('.equal');
+equal.addEventListener('click', function(){
+    first = Number(firstNumber);
+    last = Number(lastNumber);
+    let result = operate(first, currentOperator, last);
+    screen.innerHTML = result;
+});
 
 
 
