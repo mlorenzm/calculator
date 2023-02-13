@@ -56,10 +56,11 @@ let numbers = document.getElementsByClassName('operand');
 
 for (let i=0; i<numbers.length; i++){
     numbers[i].addEventListener('click', function(){
-
-        firstNumber += numbers[i].innerHTML;
-        screen.innerHTML = firstNumber;
-        if (currentOperator){
+        if (!currentOperator){
+            firstNumber += numbers[i].innerHTML;
+            screen.innerHTML = firstNumber;
+        }
+        else if (currentOperator){
             lastNumber += numbers[i].innerHTML;
             screen.innerHTML = lastNumber;
         }
@@ -78,8 +79,6 @@ for (let i=0; i<operators.length; i++){
         })
 };
 
-
-// I have the way to join numbers and print them to the screen, erasing them when the C button is pressed
 
 
 
