@@ -35,7 +35,7 @@ body{
     grid-template-columns: repeat(4, 1fr);
     height: 65vh;
     grid-template-areas: 
-    "divis inverse clear back"
+    "clear clear back divis"
     "seven eight nine multi"
     "four five six minus"
     "one two three plus "
@@ -55,7 +55,7 @@ button{
 .symbol{
     font-size: calc(1rem*1.2*1.2*1.2*1.2);
 }
-.plus, .minus, .backspace, .multi{
+.plus, .minus, .divis, .multi{
     background-color: #f6f6f6;
 }
 .number:hover{
@@ -64,7 +64,7 @@ button{
 .symbol:hover{
     background-color: var(--gray-light);
 }
-.plus:hover, .minus:hover, .backspace:hover, .multi:hover{
+.plus:hover, .minus:hover, .divis:hover, .multi:hover{
     background-color: hsl(0, 0%, 99%);
 }
 
@@ -99,7 +99,7 @@ button{
 .nine{grid-area: nine;}
 .clear{grid-area:clear;}
 .backspace{grid-area:back;}
-.inverse{grid-area:inverse;}
+
 .divis{grid-area: divis;}
 .multi{grid-area: multi;}
 .plus{grid-area: plus ;}
