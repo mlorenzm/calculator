@@ -36,70 +36,41 @@ function operate(num1, operator, num2){
     } else if (operator == '÷'){
         return divide(num1,num2);
     }
-}
-
-function clearScreen() {
-    screen.innerHTML = '⠀'; // this is an empty unicode character, to avoid CSS screen collapsing
-    currentOperator = '';
-    firstNumber = '';
-    lastNumber = '';
 };
 
+const btns = document.querySelector('.buttons');
+const screen = document.querySelector('.screen');
+let decimal = false;
 
-let clear = document.querySelector('.clear');
-let screen = document.querySelector('.screen');
-clear.addEventListener('click', clearScreen);
-
-let firstNumber ='';
-let lastNumber = '';
-
-let numbers = document.getElementsByClassName('operand');
-
-for (let i=0; i<numbers.length; i++){
-    numbers[i].addEventListener('click', function(){
-        screen.innerHTML = '⠀';
-        if (!currentOperator){
-            firstNumber += numbers[i].innerHTML;
-            screen.innerHTML = firstNumber;
-        }
-        else if (currentOperator){
-            lastNumber += numbers[i].innerHTML;
-            screen.innerHTML = lastNumber;
-        }
-        })
-};
-
-let currentOperator;
-let operators = document.getElementsByClassName('operator');
-
-
-for (let i=0; i<operators.length; i++){
-    operators[i].addEventListener('click', function(){
-        currentOperator = operators[i].innerHTML;
-        clearScreen;
-        screen.innerHTML = currentOperator;
-        })
-};
-
-let backspace = document.querySelector('.backspace')
-backspace.addEventListener('click', function(){
-    if (screen.innerHTML.length == '1'){
-        screen.innerHTML = '0';
-    } else {
-        newScreen = screen.innerHTML.slice(0, -1);
-        screen.innerHTML = newScreen;
+btns.addEventListener('click', e =>{
+    let key = e.target;
+    let keyClass= key.classList;
+    let keyContent = key.textContent;
+    let displayedNum = screen.textContent;
+    if(keyClass.contains('number')){
+    screen.textContent = displayedNum + keyContent};
+    if (keyClass.contains('dot')){
+        if(decimal==false){ 
+            screen.textContent = displayedNum + '.';
+            decimal = true;}
     }
+    if (keyClass.contains('clear')){
+        screen.textContent = '0';
+        decimal = false;
+    }
+    if (keyClass.contains('backspace')){
+        if(screen.textContent.length <= 2){
+            screen.textContent = '0'
+            decimal = true
+        } else screen.textContent = screen.textContent.slice(0,-1);
+    }
+
+
+
+   // if(keyClass.contains('number')) {console.log(keyContent)}
+    if(keyClass.contains('clear')) {console.log('clear')}
+    if(keyClass.contains('backspace')) {console.log('backspace')}
+    if(keyClass.contains('operator')) {console.log('operator')}
+   // if(keyClass.contains('dot')) {console.log('decimal')}
+    if(keyClass.contains('equal')) {console.log('equal')}
 })
-
-let equal = document.querySelector('.equal');
-equal.addEventListener('click', function(){
-    first = Number(firstNumber);
-    last = Number(lastNumber);
-    let result = operate(first, currentOperator, last);
-    screen.innerHTML = result;
-});
-
-
-
-
-    
