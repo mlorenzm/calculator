@@ -16,18 +16,11 @@ const divide = (a,b) => {
     }
     return a / b;
 };
-const invert = (a) => {
-    if (a == 0){
-        return 'dude';
-    }
-    return 1 / a;
-};
+
 
 
 function operate(num1, operator, num2){
-    if (operator == 'x⁻¹'){
-        return invert(num1);
-    } else if (operator == '+'){
+     if (operator == '+'){
         return add(num1, num2);
     } else if (operator == '-'){
         return subtract(num1,num2);
@@ -38,39 +31,85 @@ function operate(num1, operator, num2){
     }
 };
 
-const btns = document.querySelector('.buttons');
+
+const numberButtons = document.querySelectorAll('.number');
+const operatorButtons = document.querySelectorAll('.operator');
+const clearButton = document.querySelector('.clear');
+const equalButton = document.querySelector('.equal');
+const dotButton = document.querySelector('.dot');
+const backspaceButton = document.querySelector('.backspace');
 const screen = document.querySelector('.screen');
-let decimal = false;
+let previousNumber;
+let lastNumber;
+let operator;
+let equal = false;
+let dot;
 
-btns.addEventListener('click', e =>{
-    let key = e.target;
-    let keyClass= key.classList;
-    let keyContent = key.textContent;
-    let displayedNum = screen.textContent;
-    if(keyClass.contains('number')){
-    screen.textContent = displayedNum + keyContent};
-    if (keyClass.contains('dot')){
-        if(decimal==false){ 
-            screen.textContent = displayedNum + '.';
-            decimal = true;}
+numberButtons.forEach(item =>{
+    item.addEventListener('click', e =>{
+        if(screen.textContent == 0){
+            screen.innerHTML = item.innerHTML;
+        }else{
+            screen.innerHTML += item.innerHTML
+        }
+
+        // something if the operator has been used
+    })
+});
+
+operatorButtons.forEach(item =>{
+    item.addEventListener('click', e =>{
+        if (previousNumber){
+            currentNumber = parseFloat(screen.innerHTML);
+            previousNumber = operate(currentNumber, operator, previousNumber);
+            screen.innerHTML = previousNumber;
+        } else{
+            previousNumber = parseFloat(screen.innerHTML);
+        }
+        screen.innerHTML = '0'
+        operator = item.innerHTML;
+        dot = false;
+    })
+});
+
+dotButton.addEventListener('click', e=>{
+    if (!dot){
+        screen.innerHTML += '.';
+        dot = true;
     }
-    if (keyClass.contains('clear')){
-        screen.textContent = '0';
-        decimal = false;
+})
+function clear(display){
+    if (display == 'clear'){screen.innerHTML = '0';};
+    previousNumber = undefined;
+    lastNumber = undefined;
+    operator = undefined;
+    equal = false;
+    dot = false;
+}
+
+
+equalButton.addEventListener('click', e =>{
+    if(operator == undefined){
+        screen.innerHTML = 'Error';}
+    else if (!equal){
+        lastNumber = parseFloat(screen.innerHTML);
+        equal = true;
+        screen.innerHTML = operate(previousNumber, operator, lastNumber);
+    } else {
+        screen.innerHTML = operate(parseFloat(screen.innerHTML), operator, lastNumber);
     }
-    if (keyClass.contains('backspace')){
-        if(screen.textContent.length <= 2){
-            screen.textContent = '0'
-            decimal = true
-        } else screen.textContent = screen.textContent.slice(0,-1);
+}
+);
+
+clearButton.addEventListener('click', e=>{
+    clear('clear');
+});
+
+
+backspaceButton.addEventListener('click', e=>{
+    if(screen.innerHTML.length > 1){
+        screen.innerHTML = screen.innerHTML.slice(0,-1);
+    } else {
+        screen.innerHTML = '0';
     }
-
-
-
-   // if(keyClass.contains('number')) {console.log(keyContent)}
-    if(keyClass.contains('clear')) {console.log('clear')}
-    if(keyClass.contains('backspace')) {console.log('backspace')}
-    if(keyClass.contains('operator')) {console.log('operator')}
-   // if(keyClass.contains('dot')) {console.log('decimal')}
-    if(keyClass.contains('equal')) {console.log('equal')}
 })
