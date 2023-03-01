@@ -73,9 +73,9 @@ operatorButtons.forEach(item =>{
 });
 
 dotButton.addEventListener('click', e=>{
-    if (!dot){
+    if (!screen.textContent.includes('.')){
         screen.textContent += '.';
-        dot = true;
+    
     }
 })
 function clear(display){
