@@ -12,6 +12,7 @@ const multiply = (a,b) => {
 
 const divide = (a,b) => {
     if (b == 0){
+        errorState = true;
         return 'idk';
     }
     return a / b;
@@ -31,7 +32,7 @@ function operate(num1, operator, num2){
     }
 };
 
-
+const allButtons = document.querySelectorAll('button');
 const numberButtons = document.querySelectorAll('.number');
 const operatorButtons = document.querySelectorAll('.operator');
 const clearButton = document.querySelector('.clear');
@@ -44,11 +45,13 @@ let lastNumber;
 let operator;
 let equal = false;
 let ans = false;
-
+let errorState;
 
 numberButtons.forEach(item =>{
     item.addEventListener('click', e =>{
-        if(screen.textContent == '0'){
+        if(errorState == true){
+            clear();
+        } else if(screen.textContent == '0'){
             screen.textContent = item.textContent;
         } else if(previousNumber && !ans){
             screen.textContent = item.textContent;
@@ -64,7 +67,7 @@ operatorButtons.forEach(item =>{
         if (previousNumber){
             currentNumber = parseFloat(screen.textContent);
             console.log(`current number is ${currentNumber}`)
-            previousNumber = operate(currentNumber, operator, previousNumber);
+            previousNumber = operate(previousNumber, operator, currentNumber);
             screen.textContent = previousNumber;
             ans = false;
         } else{
@@ -81,12 +84,13 @@ dotButton.addEventListener('click', e=>{
     }
 })
 function clear(display){
-    if (display == 'clear'){screen.textContent = '0';};
+    screen.textContent = '0';
     previousNumber = undefined;
     lastNumber = undefined;
     operator = undefined;
     equal = false;
     ans = false;
+    errorState = false;
 }
 
 
@@ -105,7 +109,7 @@ equalButton.addEventListener('click', e =>{
 );
 
 clearButton.addEventListener('click', e=>{
-    clear('clear');
+    clear();
 });
 
 
@@ -116,3 +120,4 @@ backspaceButton.addEventListener('click', e=>{
         screen.textContent = '0';
     }
 });
+
