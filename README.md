@@ -10,6 +10,9 @@ I had to completely revamp this project two times, but I'm happy with the end re
 
 Anyways, feel free to criticise, hope you enjoy!
 
-## version 2
 
-I bugfixed using the feedback from TOP Discord user Fiddle (https://github.com/Fiddle-N):
+Live: https://mlorenzm.github.io/calculator/
+
+## Version 2
+
+I bugfixed using the feedback from TOP Discord user Fiddle (https://github.com/Fiddle-N)
