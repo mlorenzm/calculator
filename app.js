@@ -32,7 +32,6 @@ function operate(num1, operator, num2){
     }
 };
 
-const allButtons = document.querySelectorAll('button');
 const numberButtons = document.querySelectorAll('.number');
 const operatorButtons = document.querySelectorAll('.operator');
 const clearButton = document.querySelector('.clear');
@@ -64,7 +63,10 @@ numberButtons.forEach(item =>{
 
 operatorButtons.forEach(item =>{
     item.addEventListener('click', e =>{
-        if (previousNumber){
+        if (errorState == true){
+            clear();
+            return
+        } else if (previousNumber){
             currentNumber = parseFloat(screen.textContent);
             console.log(`current number is ${currentNumber}`)
             previousNumber = operate(previousNumber, operator, currentNumber);
@@ -83,7 +85,7 @@ dotButton.addEventListener('click', e=>{
         screen.textContent += '.';
     }
 })
-function clear(display){
+function clear(){
     screen.textContent = '0';
     previousNumber = undefined;
     lastNumber = undefined;
@@ -114,10 +116,11 @@ clearButton.addEventListener('click', e=>{
 
 
 backspaceButton.addEventListener('click', e=>{
-    if(screen.textContent.length > 1){
+    if (errorState == true){
+        clear();
+    } else if(screen.textContent.length > 1){
         screen.textContent = screen.textContent.slice(0,-1);
     } else {
         screen.textContent = '0';
     }
 });
-
