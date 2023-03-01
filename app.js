@@ -48,9 +48,9 @@ let dot;
 numberButtons.forEach(item =>{
     item.addEventListener('click', e =>{
         if(screen.textContent == 0){
-            screen.innerHTML = item.innerHTML;
+            screen.textContent = item.textContent;
         }else{
-            screen.innerHTML += item.innerHTML
+            screen.textContent += item.textContent
         }
 
         // something if the operator has been used
@@ -60,26 +60,26 @@ numberButtons.forEach(item =>{
 operatorButtons.forEach(item =>{
     item.addEventListener('click', e =>{
         if (previousNumber){
-            currentNumber = parseFloat(screen.innerHTML);
+            currentNumber = parseFloat(screen.textContent);
             previousNumber = operate(currentNumber, operator, previousNumber);
-            screen.innerHTML = previousNumber;
+            screen.textContent = previousNumber;
         } else{
-            previousNumber = parseFloat(screen.innerHTML);
+            previousNumber = parseFloat(screen.textContent);
         }
-        screen.innerHTML = '0'
-        operator = item.innerHTML;
+        screen.textContent = '0'
+        operator = item.textContent;
         dot = false;
     })
 });
 
 dotButton.addEventListener('click', e=>{
     if (!dot){
-        screen.innerHTML += '.';
+        screen.textContent += '.';
         dot = true;
     }
 })
 function clear(display){
-    if (display == 'clear'){screen.innerHTML = '0';};
+    if (display == 'clear'){screen.textContent = '0';};
     previousNumber = undefined;
     lastNumber = undefined;
     operator = undefined;
@@ -90,13 +90,13 @@ function clear(display){
 
 equalButton.addEventListener('click', e =>{
     if(operator == undefined){
-        screen.innerHTML = 'Error';}
+        screen.textContent = 'Error';}
     else if (!equal){
-        lastNumber = parseFloat(screen.innerHTML);
+        lastNumber = parseFloat(screen.textContent);
         equal = true;
-        screen.innerHTML = operate(previousNumber, operator, lastNumber);
+        screen.textContent = operate(previousNumber, operator, lastNumber);
     } else {
-        screen.innerHTML = operate(parseFloat(screen.innerHTML), operator, lastNumber);
+        screen.textContent = operate(parseFloat(screen.textContent), operator, lastNumber);
     }
 }
 );
@@ -107,9 +107,9 @@ clearButton.addEventListener('click', e=>{
 
 
 backspaceButton.addEventListener('click', e=>{
-    if(screen.innerHTML.length > 1){
-        screen.innerHTML = screen.innerHTML.slice(0,-1);
+    if(screen.textContent.length > 1){
+        screen.textContent = screen.textContent.slice(0,-1);
     } else {
-        screen.innerHTML = '0';
+        screen.textContent = '0';
     }
-})
+});
